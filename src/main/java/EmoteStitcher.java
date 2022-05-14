@@ -18,7 +18,7 @@ public class EmoteStitcher implements Runnable {
 
 		this.images = new ArrayList<BufferedImage>(0);
 		this.directory = directory;
-		this.addImages(directory.listFiles());
+		this.addImages(directory.listFiles(new PNGFilter()));
 		this.numRows = (int) Math.sqrt(Math.pow(Math.ceil(Math.sqrt(images.size())), 2));
 	}
 

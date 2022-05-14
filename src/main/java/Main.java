@@ -27,8 +27,10 @@ public class Main {
 				e.printStackTrace();
 			}
 		} else {
-
+			JOptionPane.showMessageDialog(null, "You must select a directory.", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
+		
+		JOptionPane.showMessageDialog(null, "Success! Saved as __MERGED.png in that directory!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public static void printError(String error) {
