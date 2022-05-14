@@ -14,23 +14,12 @@ public class EmoteStitcher implements Runnable {
 	private ArrayList<BufferedImage> images;
 	private int numRows;
 
-	public EmoteStitcher(File directory) {
-
-		this.images = new ArrayList<BufferedImage>(0);
+	public EmoteStitcher(File directory, ArrayList<BufferedImage> images) {
 		this.directory = directory;
-		this.addImages(directory.listFiles(new PNGFilter()));
+		this.images = images;
 		this.numRows = (int) Math.sqrt(Math.pow(Math.ceil(Math.sqrt(images.size())), 2));
 	}
 
-	private void addImages(File[] files) {
-		try {
-			for (File file : files)
-				images.add(ImageIO.read(file));
-		} catch (Exception e) {
-			Main.printError(e.getClass().getCanonicalName() + ": " + e.getMessage());
-			throw new IllegalStateException("Unexpected IOException", e);
-		}
-	}
 
 	@Override
 	public void run() {
@@ -47,7 +36,8 @@ public class EmoteStitcher implements Runnable {
 					graphics.drawImage(image, xCol * IMAGE_SIZE, yCol * IMAGE_SIZE, null);
 				}
 			}
-			ImageIO.write(output, "png", new File(directory, "__MERGED.png"));
+			if(!ImageIO.write(output, "png", new File(directory, "__MERGED.png")))
+				System.err.println("Couldn't write output file!");
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
